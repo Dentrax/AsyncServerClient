@@ -1,0 +1,44 @@
+language: csharp
+sudo: false
+dist: trusty
+
+mono: none
+dotnet: 2.1.502
+
+branches:
+  only:
+  - master
+
+os:
+  - linux
+  - osx
+
+addons:
+  apt:
+    update: true
+  
+solution: AsyncServerClient.sln
+
+before_install:
+  - echo "before_install start"
+  - df -h
+  - pwd
+  - uname -a
+  - |
+    if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
+      brew update
+    fi
+  - dotnet --info
+  - dotnet --version
+
+install:
+  - dotnet restore
+  - dotnet add .\AsyncServer\ package System.Data.SqlClient --version 4.6.0
+
+script:
+  - dotnet build --configuration Release --output ./bin/Release
+  
+notifications:
+  email:
+    on_success: never
+    on_failure: always
