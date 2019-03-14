@@ -33,7 +33,7 @@ before_install:
 
 install:
   - dotnet restore
-  - dotnet add AsyncServer.csproj package System.Data.SqlClient --version 4.6.0
+  - dotnet add ./AsyncServer/AsyncServer.csproj package System.Data.SqlClient --version 4.6.0
 
 script:
   - dotnet build --configuration Release --output ./bin/Release
